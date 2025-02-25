@@ -25,10 +25,3 @@ Ubuntu:
 ```
 rm -f ~/.local/share/nautilus-python/extensions/WebpConverterExtension.py
 ```
-## Manual Installation of `libwebp`
-
-If the automatic installation of `libwebp` fails, download and install it manually from:
-[http://br.archive.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.5.0-0.1_amd64.deb](http://br.archive.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.5.0-0.1_amd64.deb)
-
-After manual installation, run the install script again.
-

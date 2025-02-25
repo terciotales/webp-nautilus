@@ -14,9 +14,7 @@ then
     sudo pacman -S --noconfirm webp || show_error_and_exit
 elif type "apt-get" > /dev/null 2>&1
 then
-    wget -qO /tmp/webp_1.5.0-0.1_amd64.deb http://br.archive.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.5.0-0.1_amd64.deb
-    sudo apt-get install -y /tmp/webp_1.5.0-0.1_amd64.deb || show_error_and_exit
-    rm /tmp/webp_1.5.0-0.1_amd64.deb
+    sudo apt-get install -y webp || show_error_and_exit
 elif type "dnf" > /dev/null 2>&1
 then
     sudo dnf install -y webp || show_error_and_exit
@@ -58,6 +56,7 @@ then
     then
         sudo dnf install -y nautilus-python
     else
+        echo "nautilus-python is already installed."
     fi
 else
 # Remove previous version and setup folder
