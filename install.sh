@@ -1,25 +1,16 @@
 #!/bin/bash
 
-# Function to show error message and exit
-show_error_and_exit() {
-    echo "Error installing webp. Please download and install it manually from:"
-    echo "http://br.archive.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.5.0-0.1_amd64.deb"
-    exit 1
-}
-
 # Install webp
 echo "Installing webp..."
 if type "pacman" > /dev/null 2>&1
 then
-    sudo pacman -S --noconfirm webp || show_error_and_exit
+    sudo pacman -S --noconfirm webp || true
 elif type "apt-get" > /dev/null 2>&1
 then
-    sudo apt-get install -y webp || show_error_and_exit
+    sudo apt-get install -y webp || true
 elif type "dnf" > /dev/null 2>&1
 then
-    sudo dnf install -y webp || show_error_and_exit
-else
-    show_error_and_exit
+    sudo dnf install -y webp || true
 fi
 
 # Install python-nautilus
@@ -29,7 +20,7 @@ then
     pacman -Qi python-nautilus &> /dev/null
     if [ $? -eq 1 ]
     then
-        sudo pacman -S --noconfirm python-nautilus
+        sudo pacman -S --noconfirm python-nautilus || true
     else
         echo "python-nautilus is already installed"
     fi
@@ -45,7 +36,7 @@ then
     installed=$(apt list --installed $package_name -qq 2> /dev/null)
     if [ -z "$installed" ]
     then
-        sudo apt-get install -y $package_name
+        sudo apt-get install -y $package_name || true
     else
         echo "$package_name is already installed."
     fi
@@ -54,19 +45,30 @@ then
     installed=`dnf list --installed nautilus-python 2> /dev/null`
     if [ -z "$installed" ]
     then
-        sudo dnf install -y nautilus-python
-    else
-        echo "nautilus-python is already installed."
+        sudo dnf install -y nautilus-python || true
     fi
-else
+fi
+
+# Install dbus-x11
+echo "Installing dbus-x11..."
+if type "pacman" > /dev/null 2>&1
+then
+    sudo pacman -S --noconfirm dbus-x11 || true
+elif type "apt-get" > /dev/null 2>&1
+then
+    sudo apt-get install -y dbus-x11 || true
+elif type "dnf" > /dev/null 2>&1
+then
+    sudo dnf install -y dbus-x11 || true
+fi
+
 # Remove previous version and setup folder
 echo "Removing previous version (if found)..."
-mkdir -p ~/.local/share/nautilus-python/extensions
-rm -f ~/.local/share/nautilus-python/extensions/WebpConverterExtension.py
+rm -f $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py
 
 # Download and install the extension
 echo "Downloading newest version..."
-wget --show-progress -q -O ~/.local/share/nautilus-python/extensions/WebpConverterExtension.py https://raw.githubusercontent.com/terciotales/webp-nautilus/main/WebpConverterExtension.py
+wget --show-progress -q -O $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py https://raw.githubusercontent.com/terciotales/webp-nautilus/main/WebpConverterExtension.py
 
 # Restart nautilus
 echo "Restarting nautilus..."
