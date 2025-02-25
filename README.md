@@ -25,3 +25,14 @@ Ubuntu:
 ```
 rm -f ~/.local/share/nautilus-python/extensions/WebpConverterExtension.py
 ```
+
+## Manual Installation of webp
+
+If the automatic installation of `webp` fails, you can install it manually by downloading the package from the following link:
+
+[Download webp_1.2.4-0.3_amd64.deb](https://old-releases.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.2.4-0.3_amd64.deb)
+
+To install the downloaded package, run the following command:
+
+```sh
+sudo dpkg -i /path/to/webp_1.2.4-0.3_amd64.deb
