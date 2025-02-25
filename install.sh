@@ -1,7 +1,28 @@
 #!/bin/bash
 
+# Function to print messages in the appropriate language
+print_message() {
+    if [ "$LANGUAGE" == "pt" ]; then
+        echo "$1"
+    else
+        echo "$2"
+    fi
+}
+
+# Ask the user to choose the language
+echo "Choose your language / Escolha seu idioma:"
+echo "1) English"
+echo "2) Português"
+read -p "Enter the number / Digite o número: " lang_choice
+
+if [ "$lang_choice" == "2" ]; then
+    LANGUAGE="pt"
+else
+    LANGUAGE="en"
+fi
+
 # Install webp
-echo "Installing webp..."
+print_message "Instalando webp..." "Installing webp..."
 if type "pacman" > /dev/null 2>&1
 then
     sudo pacman -S --noconfirm webp || true
@@ -14,7 +35,7 @@ then
 fi
 
 # Install python-nautilus
-echo "Installing python-nautilus..."
+print_message "Instalando python-nautilus..." "Installing python-nautilus..."
 if type "pacman" > /dev/null 2>&1
 then
     pacman -Qi python-nautilus &> /dev/null
@@ -22,7 +43,7 @@ then
     then
         sudo pacman -S --noconfirm python-nautilus || true
     else
-        echo "python-nautilus is already installed"
+        print_message "python-nautilus já está instalado" "python-nautilus is already installed"
     fi
 elif type "apt-get" > /dev/null 2>&1
 then
@@ -38,7 +59,7 @@ then
     then
         sudo apt-get install -y $package_name || true
     else
-        echo "$package_name is already installed."
+        print_message "$package_name já está instalado." "$package_name is already installed."
     fi
 elif type "dnf" > /dev/null 2>&1
 then
@@ -50,7 +71,7 @@ then
 fi
 
 # Install dbus-x11
-echo "Installing dbus-x11..."
+print_message "Instalando dbus-x11..." "Installing dbus-x11..."
 if type "pacman" > /dev/null 2>&1
 then
     sudo pacman -S --noconfirm dbus-x11 || true
@@ -59,19 +80,22 @@ then
     sudo apt-get install -y dbus-x11 || true
 elif type "dnf" > /dev/null 2>&1
 then
-    sudo dnf install -y dbus-x11 || true
 fi
 
 # Remove previous version and setup folder
-echo "Removing previous version (if found)..."
+print_message "Removendo versão anterior (se encontrada)..." "Removing previous version (if found)..."
 rm -f $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py
 
 # Download and install the extension
-echo "Downloading newest version..."
-wget --show-progress -q -O $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py https://raw.githubusercontent.com/terciotales/webp-nautilus/main/WebpConverterExtension.py
+print_message "Baixando a versão mais recente..." "Downloading newest version..."
+if [ "$LANGUAGE" == "pt" ]; then
+    wget --show-progress -q -O $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py https://raw.githubusercontent.com/terciotales/webp-nautilus/main/WebpConverterExtension_pt.py
+else
+    wget --show-progress -q -O $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py https://raw.githubusercontent.com/terciotales/webp-nautilus/main/WebpConverterExtension.py
+fi
 
 # Restart nautilus
-echo "Restarting nautilus..."
+print_message "Reiniciando nautilus..." "Restarting nautilus..."
 nautilus -q
 
-echo "Installation Complete"
+print_message "Instalação Completa" "Installation Complete"
