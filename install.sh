@@ -67,9 +67,12 @@ then
     if [ -z "$installed" ]
     then
         sudo dnf install -y nautilus-python || true
+    else
+        print_message "nautilus-python já está instalado" "nautilus-python is already installed"
     fi
 fi
 
+# Install dbus-x11
 print_message "Instalando dbus-x11..." "Installing dbus-x11..."
 if type "pacman" > /dev/null 2>&1
 then
@@ -82,7 +85,6 @@ then
     sudo dnf install -y dbus-x11 || true
 fi
 
-# Remove previous version and setup folder
 print_message "Removendo versão anterior (se encontrada)..." "Removing previous version (if found)..."
 rm -f $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py
 
