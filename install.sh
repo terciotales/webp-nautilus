@@ -9,15 +9,21 @@ print_message() {
     fi
 }
 
-# Ask the user to choose the language
-echo "Choose your language / Escolha seu idioma:"
-echo "1) English"
-echo "2) Português"
-read -p "Enter the number / Digite o número: " lang_choice
+# Check if the script is running in an interactive shell
+if [[ $- == *i* ]]; then
+    # Ask the user to choose the language
+    echo "Choose your language / Escolha seu idioma:"
+    echo "1) English"
+    echo "2) Português"
+    read -p "Enter the number / Digite o número: " lang_choice
 
-if [ "$lang_choice" == "2" ]; then
-    LANGUAGE="pt"
+    if [ "$lang_choice" == "2" ]; then
+        LANGUAGE="pt"
+    else
+        LANGUAGE="en"
+    fi
 else
+    # Default to English if not interactive
     LANGUAGE="en"
 fi
 
@@ -32,6 +38,13 @@ then
 elif type "dnf" > /dev/null 2>&1
 then
     sudo dnf install -y webp || true
+fi
+
+# Check if webp was installed successfully
+if ! type "cwebp" > /dev/null 2>&1; then
+    print_message "Erro ao instalar webp. Tente instalar manualmente com o link: https://old-releases.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.2.4-0.3_amd64.deb" \
+                  "Error installing webp. Try installing manually with the link: https://old-releases.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.2.4-0.3_amd64.deb"
+    exit 1
 fi
 
 # Install python-nautilus
@@ -73,7 +86,6 @@ then
 fi
 
 # Install dbus-x11
-print_message "Instalando dbus-x11..." "Installing dbus-x11..."
 if type "pacman" > /dev/null 2>&1
 then
     sudo pacman -S --noconfirm dbus-x11 || true
