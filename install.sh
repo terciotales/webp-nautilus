@@ -70,7 +70,6 @@ then
     fi
 fi
 
-# Install dbus-x11
 print_message "Instalando dbus-x11..." "Installing dbus-x11..."
 if type "pacman" > /dev/null 2>&1
 then
@@ -80,6 +79,7 @@ then
     sudo apt-get install -y dbus-x11 || true
 elif type "dnf" > /dev/null 2>&1
 then
+    sudo dnf install -y dbus-x11 || true
 fi
 
 # Remove previous version and setup folder
