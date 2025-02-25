@@ -10,7 +10,7 @@ print_message() {
 }
 
 # Check if the script is running in an interactive shell
-if [[ $- == *i* ]]; then
+if [[ -t 0 ]]; then
     # Ask the user to choose the language
     echo "Choose your language / Escolha seu idioma:"
     echo "1) English"
@@ -85,7 +85,7 @@ then
     fi
 fi
 
-# Install dbus-x11
+print_message "Instalando dbus-x11..." "Installing dbus-x11..."
 if type "pacman" > /dev/null 2>&1
 then
     sudo pacman -S --noconfirm dbus-x11 || true
