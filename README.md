@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-* Ubuntu 20.04 or higher (not tested on earlier versions)
+* Ubuntu 24.10 or higher (not tested on earlier versions)
 * `libwebp` and `python-nautilus` libraries
 
 ## Installing
