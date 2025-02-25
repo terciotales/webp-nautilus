@@ -34,6 +34,13 @@ then
     sudo dnf install -y webp || true
 fi
 
+# Check if webp was installed successfully
+if ! type "cwebp" > /dev/null 2>&1; then
+    print_message "Erro ao instalar webp. Tente instalar manualmente com o link: https://old-releases.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.2.4-0.3_amd64.deb" \
+                  "Error installing webp. Try installing manually with the link: https://old-releases.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.2.4-0.3_amd64.deb"
+    exit 1
+fi
+
 # Install python-nautilus
 print_message "Instalando python-nautilus..." "Installing python-nautilus..."
 if type "pacman" > /dev/null 2>&1
@@ -80,7 +87,6 @@ then
 elif type "apt-get" > /dev/null 2>&1
 then
     sudo apt-get install -y dbus-x11 || true
-elif type "dnf" > /dev/null 2>&1
 then
     sudo dnf install -y dbus-x11 || true
 fi
