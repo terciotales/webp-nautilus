@@ -100,6 +100,9 @@ fi
 print_message "Removendo versão anterior (se encontrada)..." "Removing previous version (if found)..."
 rm -f $HOME/.local/share/nautilus-python/extensions/WebpConverterExtension.py
 
+# Create the directory if it doesn't exist
+mkdir -p $HOME/.local/share/nautilus-python/extensions/
+
 # Download and install the extension
 print_message "Baixando a versão mais recente..." "Downloading newest version..."
 if [ "$LANGUAGE" == "pt" ]; then
