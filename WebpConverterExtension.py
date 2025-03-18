@@ -6,7 +6,22 @@
 # This script is released to the public domain.
 
 import gi
-gi.require_version('Nautilus', '4.0')
+import subprocess
+
+# Get the Nautilus version
+try:
+    result = subprocess.run(['nautilus', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    version_output = result.stdout.strip()
+    if '3.' in version_output:
+        gi.require_version('Nautilus', '3.0')
+    elif '4.' in version_output:
+        gi.require_version('Nautilus', '4.0')
+    else:
+        raise Exception("Unsupported Nautilus version")
+except Exception as e:
+    print(f"Error determining Nautilus version: {e}")
+    exit(1)
+
 from gi.repository import Nautilus, GObject
 from subprocess import Popen, PIPE
 import os
