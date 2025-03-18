@@ -13,7 +13,7 @@ To set up the shortcut, run the following command:
 
 Ubuntu:
 ```
-wget -qO- https://raw.githubusercontent.com/terciotales/webp-nautilus/main/install.sh | bash
+bash -c "$(wget -qO- https://raw.githubusercontent.com/terciotales/webp-nautilus/main/install.sh)"
 ```
 
 
