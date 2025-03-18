@@ -15,7 +15,7 @@ if [[ -t 0 ]]; then
     echo "Choose your language / Escolha seu idioma:"
     echo "1) English"
     echo "2) Português"
-    read -p "Enter the number / Digite o número: " lang_choice
+    read -p "Enter the number / Digite o número: " lang_choice </dev/tty
 
     if [ "$lang_choice" == "2" ]; then
         LANGUAGE="pt"
