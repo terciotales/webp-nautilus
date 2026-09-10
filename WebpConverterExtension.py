@@ -6,7 +6,20 @@
 # This script is released to the public domain.
 
 import gi
-gi.require_version('Nautilus', '4.0')
+
+
+def require_nautilus_version():
+    """Load the newest Nautilus API supported by the installed extension."""
+    for version in ('4.1', '4.0'):
+        try:
+            gi.require_version('Nautilus', version)
+            return
+        except ValueError:
+            continue
+    raise ImportError('Nautilus 4.0 or 4.1 is required')
+
+
+require_nautilus_version()
 from gi.repository import Nautilus, GObject
 from subprocess import Popen, PIPE
 import os
